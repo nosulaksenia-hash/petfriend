@@ -1,0 +1,666 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Зоомагазин PetFriend</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #371F76;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        header {
+            background: #fff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #3A0CA3;
+            flex-shrink: 0;
+        }
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 5px 0;
+        }
+
+            nav a {
+                margin-left: 25px;
+                text-decoration: none;
+                color: #371F76;
+                font-weight: 500;
+                transition: color 0.3s;
+                white-space: nowrap;
+            }
+
+            nav a:hover {
+                color: #3A0CA3;
+            }
+
+        .hero {
+            min-height: 500px;
+            background: linear-gradient(135deg, #CCA3FF, #E5D0FF);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0 40px 60px;
+            gap: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 620px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: #371F76;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #371F76;
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+
+        /*кот на главном экране*/
+        .hero-cat {
+            width: 380px;
+            max-width: 40%;
+            height: auto;
+            margin-left: auto;
+            margin-right: -20px;
+            flex-shrink: 0;
+            filter: drop-shadow(0 10px 20px rgba(58, 12, 163, 0.25));
+            animation: catFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes catFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-12px) rotate(2deg);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            background: #49259b;
+            color: #ffffff;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+            /*кнопка после*/
+            .btn:hover {
+                background: #2E0A7A;
+                transform: translateY(-2px);
+            }
+
+        .catalog {
+            padding: 70px 0;
+            background: #f3ebff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .catalog-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: #3A0CA3;
+            margin-bottom: 45px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(58, 12, 163, 0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+            /*плашка после*/
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(58, 12, 163, 0.22);
+            }
+
+            .card img {
+                width: 100%;
+                height: 320px;
+                object-fit: cover;
+                display: block;
+                background: #E5D0FF;
+            }
+        /*плашка надпись*/
+        .card-caption {
+            padding: 18px 20px 22px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #3A0CA3;
+            background: #faf7ff;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .items {
+            background: #faf7ff;
+            padding: 70px 40px;
+        }
+
+        .items-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .item-card {
+            display: flex;
+            align-items: stretch;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(58, 12, 163, 0.12);
+            margin-bottom: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .item-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 28px rgba(58, 12, 163, 0.22);
+            }
+
+            .item-card img {
+                width: 300px;
+                height: 220px;
+                object-fit: cover;
+                flex-shrink: 0;
+                background: #E5D0FF;
+            }
+
+        .item-info {
+            padding: 25px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .item-info h3 {
+                font-size: 24px;
+                color: #3A0CA3;
+                margin-bottom: 10px;
+            }
+
+            .item-info p {
+                font-size: 16px;
+                color: #371F76;
+            }
+
+        .item-btn {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: 18px;
+            background: #49259b;
+            color: #ffffff;
+            padding: 10px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+            .item-btn:hover {
+                background: #2E0A7A;
+                transform: translateY(-2px);
+            }
+
+        .about {
+            background: #E5D0FF;
+            padding: 70px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .about p {
+                max-width: 700px;
+                margin: 0 auto;
+                font-size: 18px;
+                color: #371F76;
+                position: relative;
+                z-index: 2;
+            }
+
+            .about h2 {
+                position: relative;
+                z-index: 2;
+            }
+
+        footer {
+            background: #3A0CA3;
+            color: #E5D0FF;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            footer p {
+                position: relative;
+                z-index: 2;
+            }
+
+            footer a {
+                color: #CCA3FF;
+                text-decoration: none;
+            }
+
+        /*коты (фон, не сдвигают текст)*/
+        .decor-cat {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            filter: drop-shadow(0 8px 16px rgba(58, 12, 163, 0.18));
+            z-index: 1;
+            animation: catSway 3.5s ease-in-out infinite;
+        }
+
+        /*покачивание для всех котов */
+        @keyframes catSway {
+            0%, 100% {
+                transform: translateY(0) rotate(-3deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(3deg);
+            }
+        }
+
+        /*2 кот (аа4_1) правый верхний угол*/
+        .decor-cat--catalog {
+            width: 160px;
+            top: 10px;
+            right: 30px;
+            opacity: 0.9;
+        }
+
+        /*3 кот (аа5_1) в «О нас», левый нижний угол */
+        .decor-cat--about {
+            width: 200px;
+            left: 30px;
+            bottom: 10px;
+            opacity: 0.95;
+        }
+
+        /*4 кот (аа6_1) в футере, правый нижний угол*/
+        .decor-cat--footer {
+            width: 180px;
+            right: 40px;
+            bottom: -30px;
+            opacity: 0.95;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 15px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav {
+                justify-content: center;
+                width: 100%;
+            }
+
+                nav a {
+                    margin: 0 10px;
+                    font-size: 14px;
+                }
+
+            .hero {
+                flex-direction: column;
+                min-height: auto;
+                padding: 40px 15px 30px;
+                gap: 20px;
+            }
+
+            .hero-content {
+                order: 1;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+                margin-bottom: 22px;
+            }
+
+            .btn {
+                padding: 12px 28px;
+                font-size: 15px;
+            }
+
+            .hero-cat {
+                order: 2;
+                width: 240px;
+                max-width: 70%;
+                margin: 0 auto;
+            }
+
+            .catalog {
+                padding: 50px 0;
+            }
+
+            .catalog-wrap {
+                padding: 0 15px;
+            }
+
+            .section-title {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .card img {
+                height: 240px;
+            }
+
+            .card-caption {
+                font-size: 17px;
+                padding: 14px 16px 18px;
+            }
+
+            .items {
+                padding: 50px 15px;
+            }
+
+            .item-card {
+                flex-direction: column;
+            }
+
+                .item-card img {
+                    width: 100%;
+                    height: 220px;
+                }
+
+            .item-info {
+                padding: 20px;
+            }
+
+                .item-info h3 {
+                    font-size: 20px;
+                }
+
+                .item-info p {
+                    font-size: 15px;
+                }
+
+            .item-btn {
+                align-self: stretch;
+                text-align: center;
+                padding: 12px 20px;
+            }
+
+            .about {
+                padding: 50px 20px;
+            }
+
+                .about p {
+                    font-size: 16px;
+                }
+
+            footer {
+                padding: 35px 20px 45px;
+                font-size: 15px;
+            }
+
+            .decor-cat--catalog {
+                width: 90px;
+                top: 5px;
+                right: 5px;
+                opacity: 0.6;
+            }
+
+            .decor-cat--about {
+                width: 100px;
+                left: 5px;
+                bottom: 5px;
+                opacity: 0.6;
+            }
+
+            .decor-cat--footer {
+                width: 100px;
+                right: 10px;
+                bottom: -15px;
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">PetFriend</div>
+        <nav>
+            <a href="#catalog">Каталог</a>
+            <a href="#items">Предметы</a>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+    </header>
+
+    <!--главный экран-->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Зоомагазин "PetFriend"</h1>
+            <p>Мы не просто продаем товары для питомцев, мы искренне верим, что каждый хвостик заслуживает любящей семьи.</p>
+            <a href="#catalog" class="btn">Найти питомца</a>
+            <img src="./картинки/аа2_1.png" alt="" class="hero-cat">
+        </div>
+    </section>
+
+    <!--каталог-->
+    <section class="catalog" id="catalog">
+        <img src="./картинки/аа4_1.png" alt="" class="decor-cat decor-cat--catalog">
+        <div class="catalog-wrap">
+            <h2 class="section-title">Каталог</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="./картинки/хом3.jpg" alt="Хомяк Боря">
+                    <div class="card-caption">Хомяк Боря</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/kot1.jpg" alt="Кот Ахмед">
+                    <div class="card-caption">Кот Ахмед</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/собака1.jfif" alt="Шабака">
+                    <div class="card-caption">Шабака</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/ящ2.jpg" alt="Ящерица Пашка">
+                    <div class="card-caption">Ящерица Пашка</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/кот2.webp" alt="Кот Крутой">
+                    <div class="card-caption">Кот Крутой</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/собака2.jpg" alt="Собака Пушинка">
+                    <div class="card-caption">Собака Пушинка</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/ящ3.jpg" alt="Ящерица Влад">
+                    <div class="card-caption">Ящерица Влад</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/хом2.jfif" alt="Хомяк Полина">
+                    <div class="card-caption">Хомяк Полина</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/кот3.jfif" alt="Кот Бусинка">
+                    <div class="card-caption">Кот Бусинка</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/hom1.jfif" alt="Миишааа">
+                    <div class="card-caption">Миишааа</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/ящ1.jpg" alt="Ящерица Тёма">
+                    <div class="card-caption">Ящерица Тёма</div>
+                </div>
+                <div class="card">
+                    <img src="./картинки/mish1.jpg" alt="Мышь ИГ-ЛИ-СТАЯ">
+                    <div class="card-caption">Мышь ИГ-ЛИ-СТАЯ</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--"Предметы"-->
+    <section class="items" id="items">
+        <div class="items-wrap">
+            <h2 class="section-title">Предметы для питомцев</h2>
+
+            <div class="item-card">
+                <img src="./картинки/корм.jpg" alt="Сухой корм">
+                <div class="item-info">
+                    <h3>Сухой корм</h3>
+                    <p>Сбалансированный корм премиум-класса для взрослых кошек и собак. Содержит витамины и минералы, поддерживает здоровье шерсти и пищеварения.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <img src="./картинки/мячик.jpg" alt="Игрушка">
+                <div class="item-info">
+                    <h3>Игрушка-мячик</h3>
+                    <p>Прочный резиновый мяч для активных игр. Отлично подходит для апортировки и тренировок, безопасен для зубов питомца.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <img src="./картинки/лежак.webp" alt="Лежак">
+                <div class="item-info">
+                    <h3>Лежак</h3>
+                    <p>Уютное спальное место. Съёмный чехол легко стирается, подходит для собак средних пород.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <img src="./картинки/поводок.jpg" alt="Поводок">
+                <div class="item-info">
+                    <h3>Поводок-рулетка</h3>
+                    <p>Удобный поводок длиной до 5 метров с тормозной системой. Идеален для прогулок в парке и тренировок послушания.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <img src="./картинки/клетка.jpg" alt="Клетка">
+                <div class="item-info">
+                    <h3>Клетка для грызунов</h3>
+                    <p>Просторная клетка с несколькими ярусами, поилкой и колесом. Подходит для хомяков, мышей и других мелких грызунов.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+            <div class="item-card">
+                <img src="./картинки/аквариум.jpg" alt="Аквариум">
+                <div class="item-info">
+                    <h3>Аквариум</h3>
+                    <p>Стеклянный аквариум с фильтром и подсветкой. Отличный дом для рыбок и водных растений.</p>
+                    <button class="item-btn" type="button">Заказать</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!--О нас-->
+    <section class="about" id="about">
+        <img src="./картинки/аа5_1.png" alt="" class="decor-cat decor-cat--about">
+        <h2 class="section-title">О нас</h2>
+        <p>Наша команда — это настоящие энтузиасты, любящие животных больше всего на свете. Мы работаем для того, чтобы каждый питомец нашел своего человека, а каждый новый владелец получил всю необходимую поддержку и полезные советы по уходу. Приходите к нам — возможно, именно здесь вас ждет ваш новый лучший друг!</p>
+    </section>
+
+    <!--подвал-->
+    <footer id="contacts">
+        <img src="./картинки/аа6_1.png" alt="" class="decor-cat decor-cat--footer">
+        <p>© 2026 PetFriend. Все права защищены.</p>
+        <p>Телефон: <a href="tel:+375290006752">+375 (29) 000-67-52</a> · Email: <a href="mailto:petfriend@shop.com">petfriend@shop.com</a></p>
+    </footer>
+</body>
+</html>
