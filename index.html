@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
@@ -363,23 +363,172 @@
             bottom: -30px;
             opacity: 0.95;
         }
+        /* ...стили выше... */
+/*Бургер-кнопка ( скрыта на ПК)*/
+.burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px; height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 200;
+}
+
+.burger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: #3A0CA3;
+    border-radius: 3px;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.burger-active span:nth-child(1) {
+    transform: translateY(10.5px) rotate(45deg);
+}
+
+.burger-active span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-active span:nth-child(3) {
+    transform: translateY(-10.5px) rotate(-45deg);
+}
+/*планшет: до 992px */
+@media (max-width: 992px) {
+
+header {
+    padding: 12px 20px;
+    flex-wrap: wrap;
+}
+
+.burger {
+    display: flex;
+}
+
+nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(58, 12, 163, 0.12);
+    transition: max-height 0.35s ease, padding 0.35s ease;
+}
+
+    nav.nav-open {
+        max-height: 320px;
+        padding: 10px 0 20px;
+    }
+
+    nav a {
+        margin: 0;
+        padding: 12px 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        border-bottom: 1px solid #f0e8ff;
+    }
+
+        nav a:last-child {
+            border-bottom: none;
+        }
+
+.hero {
+    padding: 40px 25px 30px;
+    gap: 20px;
+    min-height: auto;
+}
+
+.hero h1 {
+    font-size: 34px;
+}
+
+.hero p {
+    font-size: 17px;
+}
+
+.hero-cat {
+    width: 260px;
+    max-width: 45%;
+}
+
+.catalog-wrap {
+    padding: 0 25px;
+}
+
+.section-title {
+    font-size: 30px;
+    margin-bottom: 35px;
+}
+
+.grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.card img {
+    height: 260px;
+}
+
+.items {
+    padding: 55px 25px;
+}
+
+.item-card img {
+    width: 240px;
+    height: 200px;
+}
+
+.item-info {
+    padding: 20px 22px;
+}
+
+.item-info h3 {
+    font-size: 20px;
+}
+
+.item-info p {
+    font-size: 15px;
+}
+
+.about {
+    padding: 55px 25px;
+}
+
+footer {
+    padding: 35px 25px 45px;
+}
+
+.decor-cat--catalog {
+    width: 120px;
+    right: 15px;
+    opacity: 0.75;
+}
+
+.decor-cat--about {
+    width: 140px;
+    left: 15px;
+    opacity: 0.75;
+}
+
+.decor-cat--footer {
+    width: 130px;
+    right: 20px;
+    bottom: -20px;
+    opacity: 0.75;
+}
+}
         @media (max-width: 768px) {
-            header {
-                padding: 12px 15px;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            nav {
-                justify-content: center;
-                width: 100%;
-            }
-
-                nav a {
-                    margin: 0 10px;
-                    font-size: 14px;
-                }
-
             .hero {
                 flex-direction: column;
                 min-height: auto;
@@ -511,12 +660,18 @@
 <body>
     <header>
         <div class="logo">PetFriend</div>
-        <nav>
-            <a href="#catalog">Каталог</a>
-            <a href="#items">Предметы</a>
-            <a href="#about">О нас</a>
-            <a href="#contacts">Контакты</a>
-        </nav>
+        <button class="burger" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<nav id="mainNav">
+    <a href="#catalog">Каталог</a>
+    <a href="#items">Предметы</a>
+    <a href="#about">О нас</a>
+    <a href="#contacts">Контакты</a>
+</nav>
     </header>
 
     <!--главный экран-->
@@ -662,5 +817,23 @@
         <p>© 2026 PetFriend. Все права защищены.</p>
         <p>Телефон: <a href="tel:+375290006752">+375 (29) 000-67-52</a> · Email: <a href="mailto:petfriend@shop.com">petfriend@shop.com</a></p>
     </footer>
+    <!--для бургер-меню -->
+<script>
+    const menuToggle = document.getElementById('burgerBtn');
+    const navMenu = document.getElementById('mainNav');
+
+    menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('nav-open');
+        menuToggle.classList.toggle('burger-active');
+    });
+
+    // Закрыть меню при клике вне его
+    document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('nav-open');
+            menuToggle.classList.remove('burger-active');
+        }
+    });
+</script>
 </body>
 </html>
