@@ -363,20 +363,8 @@
             bottom: -30px;
             opacity: 0.95;
         }
-        /* ...стили выше... */
-/*Бургер-кнопка ( скрыта на ПК)*/
-.burger {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 32px; height: 24px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 200;
-}
-
+        /* ===== Бургер-кнопка (по умолчанию скрыта на ПК) ===== */ .burger-toggle { display: none; }
+.burger { display: none; flex-direction: column; justify-content: space-between; width: 32px; height: 24px; cursor: pointer; z-index: 200; }
 .burger span {
     display: block;
     height: 3px;
@@ -385,31 +373,23 @@
     border-radius: 3px;
     transition: transform 0.3s, opacity 0.3s;
 }
-
-.burger-active span:nth-child(1) {
-    transform: translateY(10.5px) rotate(45deg);
-}
-
-.burger-active span:nth-child(2) {
-    opacity: 0;
-}
-
-.burger-active span:nth-child(3) {
-    transform: translateY(-10.5px) rotate(-45deg);
-}
-/*планшет: до 992px */
+/* Крестик — когда чекбокс отмечен */ .burger-toggle:checked ~ .burger span:nth-child(1) { transform: translateY(10.5px) rotate(45deg); }
+.burger-toggle:checked ~ .burger span:nth-child(2) { opacity: 0; }
+.burger-toggle:checked ~ .burger span:nth-child(3) { transform: translateY(-10.5px) rotate(-45deg); }
+/*Планшет и телефон: до 992px*/
 @media (max-width: 992px) {
-
 header {
     padding: 12px 20px;
     flex-wrap: wrap;
 }
 
+/* Показываем бургер */
 .burger {
     display: flex;
 }
 
-nav {
+/* Меню прячется и выпадает сверху */
+header nav {
     position: absolute;
     top: 100%;
     left: 0;
@@ -425,24 +405,24 @@ nav {
     transition: max-height 0.35s ease, padding 0.35s ease;
 }
 
-    nav.nav-open {
-        max-height: 320px;
-        padding: 10px 0 20px;
+/* Чекбокс отмечен → меню раскрывается */
+.burger-toggle:checked ~ nav {
+    max-height: 320px;
+    padding: 10px 0 20px;
+}
+
+header nav a {
+    margin: 0;
+    padding: 12px 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 1px solid #f0e8ff;
+}
+
+    header nav a:last-child {
+        border-bottom: none;
     }
-
-    nav a {
-        margin: 0;
-        padding: 12px 20px;
-        width: 100%;
-        text-align: center;
-        font-size: 16px;
-        border-bottom: 1px solid #f0e8ff;
-    }
-
-        nav a:last-child {
-            border-bottom: none;
-        }
-
 .hero {
     padding: 40px 25px 30px;
     gap: 20px;
@@ -528,6 +508,7 @@ footer {
     opacity: 0.75;
 }
 }
+/* для тел*/
         @media (max-width: 768px) {
             .hero {
                 flex-direction: column;
@@ -660,11 +641,13 @@ footer {
 <body>
     <header>
         <div class="logo">PetFriend</div>
-        <button class="burger" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="mainNav">
+        <input type="checkbox" id="burgerToggle" class="burger-toggle" hidden>
+
+<label for="burgerToggle" class="burger" aria-label="Открыть меню">
     <span></span>
     <span></span>
     <span></span>
-</button>
+</label>
 
 <nav id="mainNav">
     <a href="#catalog">Каталог</a>
@@ -817,23 +800,5 @@ footer {
         <p>© 2026 PetFriend. Все права защищены.</p>
         <p>Телефон: <a href="tel:+375290006752">+375 (29) 000-67-52</a> · Email: <a href="mailto:petfriend@shop.com">petfriend@shop.com</a></p>
     </footer>
-    <!--для бургер-меню -->
-<script>
-    const menuToggle = document.getElementById('burgerBtn');
-    const navMenu = document.getElementById('mainNav');
-
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('nav-open');
-        menuToggle.classList.toggle('burger-active');
-    });
-
-    // Закрыть меню при клике вне его
-    document.addEventListener('click', (e) => {
-        if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('nav-open');
-            menuToggle.classList.remove('burger-active');
-        }
-    });
-</script>
 </body>
 </html>
